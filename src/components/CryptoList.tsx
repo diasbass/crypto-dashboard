@@ -16,7 +16,13 @@ interface Coin {
 
 const FILTERS = ['Todas', 'Top 10', 'Top 50', 'Stablecoins']
 
-export default function CryptoList({ coins }: { coins: Coin[] }) {
+interface CryptoListProps {
+  coins: Coin[]
+  initialFilter: string
+  initialSearch: string
+}
+
+export default function CryptoList({ coins, initialFilter, initialSearch }: CryptoListProps) {
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [filter, setFilter] = useState('Todas')
