@@ -1,58 +1,63 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import CryptoCard from './CryptoCard'
+import { useEffect, useState } from "react";
+import CryptoCard from "./CryptoCard";
 
 interface Coin {
-  id: string
-  name: string
-  symbol: string
-  image: string
-  current_price: number
-  price_change_percentage_24h: number
-  market_cap_rank: number
-  categories?: string[]
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  market_cap_rank: number;
+  categories?: string[];
 }
 
-const FILTERS = ['Todas', 'Top 10', 'Top 50', 'Stablecoins']
+const FILTERS = ["Todas", "Top 10", "Top 50", "Stablecoins"];
 
 interface CryptoListProps {
-  coins: Coin[]
-  initialFilter: string
-  initialSearch: string
+  coins: Coin[];
+  initialFilter: string;
+  initialSearch: string;
 }
 
-export default function CryptoList({ coins, initialFilter, initialSearch }: CryptoListProps) {
-  const [search, setSearch] = useState('')
-  const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [filter, setFilter] = useState('Todas')
+export default function CryptoList({
+  coins,
+  initialFilter,
+  initialSearch,
+}: CryptoListProps) {
+  const [search, setSearch] = useState(initialSearch);
+  const [debouncedSearch, setDebouncedSearch] = useState(initialSearch);
+  const [filter, setFilter] = useState(initialFilter);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedSearch(search)
-    }, 300)
-    return () => clearTimeout(handler)
-  }, [search])
+      setDebouncedSearch(search);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [search]);
 
-  const filteredCoins = coins
-    .filter((coin) => {
-      const matchSearch =
-        coin.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-        coin.symbol.toLowerCase().includes(debouncedSearch.toLowerCase())
+  const filteredCoins = coins.filter((coin) => {
+    const matchSearch =
+      coin.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      coin.symbol.toLowerCase().includes(debouncedSearch.toLowerCase());
 
-      const matchFilter =
-        filter === 'Todas'
-          ? true
-          : filter === 'Top 10'
-          ? coin.market_cap_rank <= 10
-          : filter === 'Top 50'
-          ? coin.market_cap_rank <= 50
-          : filter === 'Stablecoins'
-          ? coin.symbol.toLowerCase() === 'usdt' || coin.symbol.toLowerCase() === 'usdc' || coin.symbol.toLowerCase() === 'dai'
-          : true
+    const matchFilter =
+      filter === "Todas"
+        ? true
+        : filter === "Top 10"
+        ? coin.market_cap_rank <= 10
+        : filter === "Top 50"
+        ? coin.market_cap_rank <= 50
+        : filter === "Stablecoins"
+        ? coin.symbol.toLowerCase() === "usdt" ||
+          coin.symbol.toLowerCase() === "usdc" ||
+          coin.symbol.toLowerCase() === "dai"
+        : true;
 
-      return matchSearch && matchFilter
-    })
+    return matchSearch && matchFilter;
+  });
 
   return (
     <div>
@@ -63,8 +68,8 @@ export default function CryptoList({ coins, initialFilter, initialSearch }: Cryp
             onClick={() => setFilter(f)}
             className={`px-3 py-1 rounded ${
               filter === f
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300'
+                ? "bg-blue-600 text-white"
+                : "bg-gray-700 text-gray-300"
             }`}
           >
             {f}
@@ -90,5 +95,5 @@ export default function CryptoList({ coins, initialFilter, initialSearch }: Cryp
         </div>
       )}
     </div>
-  )
+  );
 }
