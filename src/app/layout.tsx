@@ -4,9 +4,9 @@ import Link from "next/link";
 import ThemeToggle from "../components/ThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Dashboard Cripto",
+  title: "BTCrypto Watch",
   description:
-    "Painel de criptoativos com gráficos, ranking e notícias atualizadas",
+    "Crypto dashboard with charts, rankings and updated news",
 };
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
                 d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.36-6.36l-1.42 1.42M6.34 17.66l-1.42 1.42m0-13.44l1.42 1.42M17.66 17.66l1.42 1.42M12 8a4 4 0 100 8 4 4 0 000-8z"
               />
             </svg>
-            <span className="font-bold text-lg">CryptoDash</span>
+            <span className="font-bold text-lg">BTCrypto Watch</span>
           </Link>
 
           <nav className="flex items-center gap-4">
@@ -41,7 +41,7 @@ export default function RootLayout({
               Home
             </Link>
             <Link href="/noticias" className="hover:text-yellow-400 transition">
-              Notícias
+              News
             </Link>
             <ThemeToggle />
           </nav>
@@ -50,8 +50,8 @@ export default function RootLayout({
         <main className="flex-grow">{children}</main>
 
         <footer className="bg-gray-800 p-4 text-center text-gray-400 text-sm">
-          © {new Date().getFullYear()} CryptoDash. Desenvolvido com 💡 por
-          diasbass.
+          © {new Date().getFullYear()} BTCrypto Watch. Desenvolvido com 💡 por 
+          <Link href="https://geekdigitalservices.com.br"> Geek Digital Services</Link>.
         </footer>
       </body>
     </html>

@@ -8,7 +8,7 @@ export default async function NoticiasPage() {
 
   return (
     <main className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Últimas Notícias sobre Criptomoedas</h1>
+      <h1 className="text-3xl font-bold mb-6">Latest Cryptocurrency News</h1>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {news.map((item, index) => (

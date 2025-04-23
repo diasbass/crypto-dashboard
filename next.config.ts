@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.decrypt.co',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.jwplayer.com',
+      },
     ],
   },
 }

@@ -13,7 +13,7 @@ export default async function Home({
 
   return (
     <main className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Criptomoedas</h1>
+      <h1 className="text-3xl font-bold mb-6">Cryptocurrencies</h1>
       <CryptoList coins={coins} initialFilter={filter} initialSearch={query} />
     </main>
   )
