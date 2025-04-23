@@ -1,4 +1,5 @@
 import { fetchNews } from '../../utils/fetchNews'
+import ImageWithFallback from '../../components/ImageWithFallback'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,18 +10,35 @@ export default async function NoticiasPage() {
     <main className="p-6 bg-gray-900 text-white min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Últimas Notícias sobre Criptomoedas</h1>
 
-      <ul className="space-y-4">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {news.map((item, index) => (
-          <li key={index} className="bg-gray-800 p-4 rounded-lg shadow hover:shadow-lg transition">
-            <a href={item.link} target="_blank" rel="noopener noreferrer" className="block">
-              <h2 className="text-xl font-semibold mb-1">{item.title}</h2>
-              <p className="text-sm text-gray-400">
-                {new Date(item.pubDate).toLocaleString()} · {item.source}
+          <a
+            key={index}
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-800 rounded-lg shadow hover:shadow-lg transition overflow-hidden group flex flex-col"
+          >
+            {item.thumbnail && (
+              <div className="relative h-48 w-full">
+                <ImageWithFallback
+                  src={item.thumbnail}
+                  alt={item.title}
+                />
+              </div>
+            )}
+
+            <div className="p-4 flex flex-col flex-grow">
+              <h2 className="text-lg font-semibold mb-2 group-hover:text-yellow-400 transition-colors">
+                {item.title}
+              </h2>
+              <p className="text-sm text-gray-400 mt-auto">
+                {new Date(item.pubDate).toLocaleDateString('pt-BR')} · {item.source}
               </p>
-            </a>
-          </li>
+            </div>
+          </a>
         ))}
-      </ul>
+      </div>
     </main>
   )
 }

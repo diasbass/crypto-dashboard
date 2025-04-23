@@ -1,36 +1,59 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import Link from 'next/link'
+import "./globals.css";
+import type { Metadata } from "next";
+import Link from "next/link";
+import ThemeToggle from "../components/ThemeToggle";
 
 export const metadata: Metadata = {
-  title: 'Dashboard Cripto',
-  description: 'Painel de criptoativos com gráficos, ranking e notícias atualizadas',
-}
+  title: "Dashboard Cripto",
+  description:
+    "Painel de criptoativos com gráficos, ranking e notícias atualizadas",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR">
-      <body className="bg-gray-900 text-white min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
         <header className="bg-gray-800 p-4 shadow-md flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0L15.09 7.36H23L17 11.64L20.18 19L12 14.56L3.82 19L7 11.64L1 7.36H8.91L12 0Z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 text-yellow-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.36-6.36l-1.42 1.42M6.34 17.66l-1.42 1.42m0-13.44l1.42 1.42M17.66 17.66l1.42 1.42M12 8a4 4 0 100 8 4 4 0 000-8z"
+              />
             </svg>
             <span className="font-bold text-lg">CryptoDash</span>
           </Link>
 
-          <nav className="space-x-4">
-            <Link href="/" className="hover:text-yellow-400 transition">Home</Link>
-            <Link href="/noticias" className="hover:text-yellow-400 transition">Notícias</Link>
+          <nav className="flex items-center gap-4">
+            <Link href="/" className="hover:text-yellow-400 transition">
+              Home
+            </Link>
+            <Link href="/noticias" className="hover:text-yellow-400 transition">
+              Notícias
+            </Link>
+            <ThemeToggle />
           </nav>
         </header>
 
         <main className="flex-grow">{children}</main>
 
         <footer className="bg-gray-800 p-4 text-center text-gray-400 text-sm">
-          © {new Date().getFullYear()} CryptoDash. Desenvolvido com 💡 por diasbass.
+          © {new Date().getFullYear()} CryptoDash. Desenvolvido com 💡 por
+          diasbass.
         </footer>
       </body>
     </html>
-  )
+  );
 }

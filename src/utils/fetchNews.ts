@@ -5,7 +5,9 @@ export interface NewsItem {
   link: string
   pubDate: string
   source: string
+  thumbnail?: string
 }
+
 
 const parser = new Parser()
 
@@ -35,6 +37,8 @@ export async function fetchNews(): Promise<NewsItem[]> {
         link: item.link ?? '',
         pubDate: item.pubDate ?? '',
         source: feed.source,
+        thumbnail:
+          item.enclosure?.url || item.content?.match(/<img[^>]+src="([^">]+)"/)?.[1] || '', // tenta pegar imagem
       })) ?? []
 
       allNews.push(...items)
