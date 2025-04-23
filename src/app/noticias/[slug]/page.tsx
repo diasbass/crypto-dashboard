@@ -11,9 +11,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   const { slug } = params
 
   const news = await fetchNews()
@@ -42,9 +40,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function NoticiaPage(
-  { params }: { params: { slug: string } }
-) {
+export default async function NoticiaPage({ params }: any) {
   const { slug } = params
 
   const allNews = await fetchNews()
