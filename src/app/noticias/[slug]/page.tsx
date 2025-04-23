@@ -11,10 +11,10 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata(props: {
-  params: { slug: string }
-}): Promise<Metadata> {
-  const { slug } = await props.params
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const { slug } = params
 
   const news = await fetchNews()
   const post = news.find(item => slugify(item.title) === slug)
@@ -42,10 +42,8 @@ export async function generateMetadata(props: {
   }
 }
 
-export default async function NoticiaPage(props: {
-  params: { slug: string }
-}) {
-  const { slug } = await props.params
+export default async function NoticiaPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
 
   const allNews = await fetchNews()
   const post = allNews.find(item => slugify(item.title) === slug)
@@ -61,10 +59,7 @@ export default async function NoticiaPage(props: {
 
       {post.thumbnail && (
         <div className="relative w-full h-64 mb-6 rounded overflow-hidden">
-          <ImageWithFallback
-            src={post.thumbnail}
-            alt={post.title}
-          />
+          <ImageWithFallback src={post.thumbnail} alt={post.title} />
         </div>
       )}
 
