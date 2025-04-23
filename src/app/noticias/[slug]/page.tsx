@@ -1,7 +1,8 @@
 import { fetchNews } from '../../../utils/fetchNews'
+import { slugify } from '../../../utils/slugify'
 import ImageWithFallback from '../../../components/ImageWithFallback'
 import { notFound } from 'next/navigation'
-import { slugify } from '../../../utils/slugify'
+import type { Metadata } from 'next'
 
 export async function generateStaticParams() {
   const news = await fetchNews()
@@ -10,13 +11,41 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function NoticiaPage(props: { params: { slug: string } }) {
-  const { slug } = await props.params
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const { slug } = await params
+  const news = await fetchNews()
+  const post = news.find(item => slugify(item.title) === slug)
 
+  if (!post) return {}
+
+  return {
+    title: `${post.title} | btcryptowatch`,
+    description: `Notícia sobre criptomoedas publicada por ${post.source} em ${new Date(post.pubDate).toLocaleDateString('pt-BR')}`,
+    openGraph: {
+      title: post.title,
+      description: `Leia no site original: ${post.source}`,
+      images: post.thumbnail ? [post.thumbnail] : [],
+      url: `https://btcryptowatch.com/noticias/${slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: `Publicado por ${post.source}`,
+      images: post.thumbnail ? [post.thumbnail] : [],
+    },
+    alternates: {
+      canonical: `https://btcryptowatch.com/noticias/${slug}`,
+    },
+  }
+}
+
+
+export default async function NoticiaPage({ params }: { params: { slug: string } }) {
+  const { slug } = await params
   const allNews = await fetchNews()
-  const post = allNews.find(
-    item => slugify(item.title) === slug
-  )
+  const post = allNews.find(item => slugify(item.title) === slug)
 
   if (!post) return notFound()
 
