@@ -1,5 +1,7 @@
 import { fetchNews } from '../../utils/fetchNews'
 import ImageWithFallback from '../../components/ImageWithFallback'
+import { slugify } from '../../utils/slugify'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,9 +14,7 @@ export default async function NoticiasPage() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {news.map((item, index) => (
-          <a
-            key={index}
-            href={item.link}
+          <Link key={index} href={`/noticias/${slugify(item.title)}`}            
             target="_blank"
             rel="noopener noreferrer"
             className="bg-gray-800 rounded-lg shadow hover:shadow-lg transition overflow-hidden group flex flex-col"
@@ -36,7 +36,7 @@ export default async function NoticiasPage() {
                 {new Date(item.pubDate).toLocaleDateString('pt-BR')} · {item.source}
               </p>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </main>

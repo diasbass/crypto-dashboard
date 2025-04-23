@@ -17,8 +17,8 @@ export default function ImageWithFallback({ src, alt }: Props) {
       alt={alt}
       fill
       onError={() => setError(true)}
-      className="object-cover group-hover:scale-105 transition-transform duration-200 rounded-t-lg"
-      sizes="(max-width: 768px) 100vw, 33vw"
+      className="object-cover"
+      sizes="(max-width: 768px) 100vw, 640px"
     />
   )
 }

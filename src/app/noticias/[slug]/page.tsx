@@ -1,0 +1,53 @@
+import { fetchNews } from '../../../utils/fetchNews'
+import ImageWithFallback from '../../../components/ImageWithFallback'
+import { notFound } from 'next/navigation'
+import { slugify } from '../../../utils/slugify'
+
+export async function generateStaticParams() {
+  const news = await fetchNews()
+  return news.map(item => ({
+    slug: slugify(item.title),
+  }))
+}
+
+export default async function NoticiaPage(props: { params: { slug: string } }) {
+  const { slug } = await props.params
+
+  const allNews = await fetchNews()
+  const post = allNews.find(
+    item => slugify(item.title) === slug
+  )
+
+  if (!post) return notFound()
+
+  return (
+    <main className="p-6 bg-gray-900 text-white min-h-screen max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+      <p className="text-sm text-gray-400 mb-6">
+        {new Date(post.pubDate).toLocaleDateString('pt-BR')} · {post.source}
+      </p>
+
+      {post.thumbnail && (
+        <div className="relative w-full h-64 mb-6 rounded overflow-hidden">
+          <ImageWithFallback
+            src={post.thumbnail}
+            alt={post.title}
+          />
+        </div>
+      )}
+
+      <p className="mb-8 text-gray-300">
+        Essa notícia foi extraída automaticamente de um feed externo. Clique abaixo para acessar o conteúdo completo no site original.
+      </p>
+
+      <a
+        href={post.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block bg-yellow-400 text-black px-6 py-3 font-bold rounded hover:bg-yellow-300 transition"
+      >
+        Ler no site original
+      </a>
+    </main>
+  )
+}
