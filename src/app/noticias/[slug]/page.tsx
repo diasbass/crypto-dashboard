@@ -12,9 +12,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: Awaited<{ params: { slug: string } }>
+  { params }: { params: { slug: string } }
 ): Promise<Metadata> {
-  const { slug } = props.params
+  const { slug } = params
 
   const news = await fetchNews()
   const post = news.find(item => slugify(item.title) === slug)
@@ -43,9 +43,9 @@ export async function generateMetadata(
 }
 
 export default async function NoticiaPage(
-  props: Awaited<{ params: { slug: string } }>
+  { params }: { params: { slug: string } }
 ) {
-  const { slug } = props.params
+  const { slug } = params
 
   const allNews = await fetchNews()
   const post = allNews.find(item => slugify(item.title) === slug)
