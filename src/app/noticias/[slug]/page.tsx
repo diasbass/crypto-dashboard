@@ -4,13 +4,10 @@ import ImageWithFallback from '../../../components/ImageWithFallback'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
-export async function generateStaticParams() {
-  const news = await fetchNews()
-  return news.map(item => ({
-    slug: slugify(item.title),
-  }))
-}
+// 🔄 Força renderização dinâmica para evitar 404
+export const dynamic = 'force-dynamic'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const { slug } = params
 
@@ -40,6 +37,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function NoticiaPage({ params }: any) {
   const { slug } = params
 
