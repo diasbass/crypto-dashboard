@@ -1,4 +1,6 @@
-import Link from 'next/link'
+import Link from "next/link";
+import { Suspense } from "react";
+import NotFoundClient from "../components/NotFoundClient";
 
 export default function NotFound() {
   return (
@@ -7,12 +9,18 @@ export default function NotFound() {
       <p className="text-gray-400 mb-6 max-w-md">
         A página que você procura não existe ou foi removida.
       </p>
+
+      {/* Renderiza informações baseadas nos searchParams, de forma segura */}
+      <Suspense fallback={null}>
+        <NotFoundClient />
+      </Suspense>
+
       <Link
         href="/"
-        className="px-6 py-3 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-300 transition"
+        className="mt-6 px-6 py-3 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-300 transition"
       >
         Voltar à página inicial
       </Link>
     </div>
-  )
+  );
 }
