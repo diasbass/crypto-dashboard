@@ -1,14 +1,18 @@
-// src/app/not-found.tsx
-import { Suspense } from 'react'
-import NotFoundClient from '../components/NotFoundClient'
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-white bg-gray-900 text-center p-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900 text-white text-center p-6">
       <h1 className="text-4xl font-bold mb-4">404 - Página não encontrada</h1>
-      <Suspense fallback={<p className="text-gray-500">Carregando detalhes...</p>}>
-        <NotFoundClient />
-      </Suspense>
+      <p className="text-gray-400 mb-6 max-w-md">
+        A página que você procura não existe ou foi removida.
+      </p>
+      <Link
+        href="/"
+        className="px-6 py-3 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-300 transition"
+      >
+        Voltar à página inicial
+      </Link>
     </div>
   )
 }
