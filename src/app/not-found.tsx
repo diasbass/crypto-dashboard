@@ -1,17 +1,6 @@
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-
-function SearchParamsDisplay() {
-  const params = useSearchParams();
-  const from = params.get("from");
-
-  return (
-    <p className="text-gray-400 text-sm mt-2">
-      {from ? `Você veio de: ${from}` : "Endereço não encontrado."}
-    </p>
-  );
-}
+import SearchParamsDisplay from "../components/SearchParamsDisplay";
 
 export default function NotFoundPage() {
   return (
