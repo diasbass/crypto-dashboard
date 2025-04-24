@@ -1,7 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
 import ThemeToggle from "../components/ThemeToggle";
+import { Analytics } from "./providers";
 
 export const metadata: Metadata = {
   title: "BTCrypto Watch",
@@ -16,7 +18,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-TY60WB1CGY`} // substitua pelo seu ID real
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-TY60WB1CGY');
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+        <Analytics />
         <header className="bg-gray-800 p-4 shadow-md flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <svg
@@ -50,8 +72,10 @@ export default function RootLayout({
         <main className="flex-grow">{children}</main>
 
         <footer className="bg-gray-800 p-4 text-center text-gray-400 text-sm">
-          © {new Date().getFullYear()} BTCrypto Watch. Desenvolvido com 💡 por 
-          <Link href="https://geekdigitalservices.com.br"> Geek Digital Services</Link>.
+          © {new Date().getFullYear()} BTCrypto Watch. Desenvolvido com 💡 por{" "}
+          <Link href="https://geekdigitalservices.com.br">
+            Geek Digital Services
+          </Link>.
         </footer>
       </body>
     </html>
