@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
-import NotFoundContent from '../../components/NotFoundClient'
+import NotFoundContent from './NotFoundContent'
 
 export default function NotFoundPage() {
   return (
-    <Suspense fallback={<div>Carregando...</div>}>
+    <Suspense fallback={<div className="p-6 text-center">Carregando...</div>}>
       <NotFoundContent />
     </Suspense>
   )
