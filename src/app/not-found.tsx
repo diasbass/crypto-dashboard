@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Suspense } from "react";
-import NotFoundClient from "../components/NotFoundClient";
+import Link from "next/link"
+import { Suspense } from "react"
+import NotFoundClient from "../components/NotFoundClient"
 
 export default function NotFound() {
   return (
@@ -10,7 +10,7 @@ export default function NotFound() {
         A página que você procura não existe ou foi removida.
       </p>
 
-      {/* Renderiza informações baseadas nos searchParams, de forma segura */}
+      {/* ✅ Wrapping dentro de <Suspense> */}
       <Suspense fallback={null}>
         <NotFoundClient />
       </Suspense>
@@ -22,5 +22,5 @@ export default function NotFound() {
         Voltar à página inicial
       </Link>
     </div>
-  );
+  )
 }
