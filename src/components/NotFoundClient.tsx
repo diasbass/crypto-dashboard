@@ -1,15 +1,15 @@
-// src/components/NotFoundClient.tsx
 'use client'
 
 import { useSearchParams } from 'next/navigation'
 
 export default function NotFoundClient() {
-  const params = useSearchParams()
-  const query = params.get('q') ?? 'desconhecido'
+  const searchParams = useSearchParams()
+
+  if (!searchParams || searchParams.size === 0) return null
 
   return (
-    <div className="text-center">
-      <p className="text-gray-400">Nada encontrado para: <strong>{query}</strong></p>
-    </div>
+    <p className="text-sm text-gray-500 mt-4">
+      Parâmetros da URL: <code>{searchParams.toString()}</code>
+    </p>
   )
 }
