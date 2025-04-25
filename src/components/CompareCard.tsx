@@ -36,7 +36,7 @@ export default function CompareCard({ coin }: CompareCardProps) {
           `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=7`
         );
         const data = await res.json();
-        const prices = data.prices.map(([_, price]: [number, number]) => price);
+        const prices = data.prices.map(([, price]: [number, number]) => price);
         setHistoricalData(prices);
       } catch (err) {
         console.error('Erro ao carregar histórico de preços:', err);
