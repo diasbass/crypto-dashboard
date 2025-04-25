@@ -63,6 +63,9 @@ export default function RootLayout({
             <Link href="/noticias" className="hover:text-yellow-400 transition">
               News
             </Link>
+            <Link href="/comparador" className="hover:text-yellow-400 transition">
+              Comparator
+            </Link>
             <ThemeToggle />
           </nav>
         </header>
