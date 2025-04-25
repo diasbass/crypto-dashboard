@@ -1,51 +1,34 @@
 'use client';
 
-import usePriceAlerts from '../hooks/usePriceAlerts'; // contexto de alertas
 import { useEffect } from 'react';
+import usePriceAlerts from '../hooks/usePriceAlerts';
+import toast from 'react-hot-toast';
 
 export default function PriceAlertsWrapper() {
-  const { alerts } = usePriceAlerts(); // agora pegando todos os alerts do contexto
+  const { alerts } = usePriceAlerts();
 
   useEffect(() => {
-    if (!alerts.length) return;
-
     const interval = setInterval(async () => {
-      try {
-        const responses = await Promise.all(
-          alerts.map((alert) =>
-            fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${alert.coinId}&vs_currencies=usd`)
-              .then((res) => res.json())
-          )
-        );
+      if (alerts.length === 0) return;
 
-        responses.forEach((data, idx) => {
-          const coinId = alerts[idx].coinId;
-          const currentPrice = data[coinId]?.usd;
-          const targetPrice = alerts[idx].targetPrice;
+      const ids = alerts.map((alert) => alert.coinId).join(',');
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+      );
+      const data = await res.json();
 
-          if (currentPrice !== undefined && currentPrice >= targetPrice) {
-            if (Notification.permission === 'granted') {
-              new Notification('Price Alert!', {
-                body: `${coinId.toUpperCase()} reached $${currentPrice.toFixed(2)}!`,
-              });
-            } else if (Notification.permission !== 'denied') {
-              Notification.requestPermission().then((permission) => {
-                if (permission === 'granted') {
-                  new Notification('Price Alert!', {
-                    body: `${coinId.toUpperCase()} reached $${currentPrice.toFixed(2)}!`,
-                  });
-                }
-              });
-            }
-          }
-        });
-      } catch (error) {
-        console.error('Error fetching price alerts:', error);
-      }
-    }, 60 * 1000); // checar a cada minuto
+      alerts.forEach((alert) => {
+        const currentPrice = data[alert.coinId]?.usd;
+        if (currentPrice !== undefined && currentPrice >= alert.targetPrice) {
+          toast.success(
+            `🚨 ${alert.coinId.toUpperCase()} reached $${alert.targetPrice.toLocaleString()}!`
+          );
+        }
+      });
+    }, 30000); // checar a cada 30 segundos
 
     return () => clearInterval(interval);
   }, [alerts]);
 
-  return null; // esse componente é apenas para "rodar" o monitoramento
+  return null;
 }

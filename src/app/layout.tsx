@@ -5,6 +5,7 @@ import Script from "next/script";
 import ThemeToggle from "../components/ThemeToggle";
 import { PriceAlertsProvider } from "../contexts/PriceAlertsContext";
 import { Toaster } from 'react-hot-toast';
+import PriceAlertsWrapper from "../components/PriceAlertsWrapper";
 
 export const metadata: Metadata = {
   title: "BTCrypto Watch",
@@ -39,7 +40,8 @@ export default function RootLayout({
       </head>
       <PriceAlertsProvider>
         <body className="min-h-screen flex flex-col bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
-          <Toaster position="top-right" />
+        <Toaster position="top-right" />
+        <PriceAlertsWrapper />
           <header className="bg-gray-800 p-4 shadow-md flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <svg
