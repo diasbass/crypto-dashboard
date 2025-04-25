@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import CompareCard from '../../components/CompareCard'
+import PriceAlertsClient from '../../components/PriceAlertsClient';
 
 interface Coin {
   id: string
@@ -62,6 +63,8 @@ export default function Comparador() {
         {selectedA && <CompareCard coin={selectedA} />}
         {selectedB && <CompareCard coin={selectedB} />}
       </div>
+
+      <PriceAlertsClient />
     </div>
   )
 }

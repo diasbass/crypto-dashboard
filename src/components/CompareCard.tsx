@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 import {
   Chart as ChartJS,
   LineElement,
@@ -10,6 +11,7 @@ import {
   PointElement,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import usePriceAlerts from '../hooks/usePriceAlerts';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
@@ -28,6 +30,7 @@ interface CompareCardProps {
 
 export default function CompareCard({ coin }: CompareCardProps) {
   const [historicalData, setHistoricalData] = useState<number[]>([]);
+  const { addAlert } = usePriceAlerts();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -46,6 +49,23 @@ export default function CompareCard({ coin }: CompareCardProps) {
     fetchHistory();
   }, [coin.id]);
 
+  const handleSetAlert = () => {
+    const targetPrice = prompt(`Set target price for ${coin.name} (USD):`);
+    if (targetPrice) {
+      const sanitized = targetPrice.replace(',', '.');
+      const parsedPrice = parseFloat(sanitized);
+      if (!isNaN(parsedPrice)) {
+        addAlert({
+          coinId: coin.id,
+          targetPrice: parsedPrice,
+        });
+        toast.success(`${coin.name} alert set at $${parsedPrice.toLocaleString()}`);
+      } else {
+        toast.error('Invalid price entered.');
+      }
+    }
+  };
+
   return (
     <div className="border rounded-lg shadow-md p-4 w-full max-w-md bg-white dark:bg-gray-800">
       <div className="flex items-center space-x-4">
@@ -62,9 +82,7 @@ export default function CompareCard({ coin }: CompareCardProps) {
             ${coin.current_price.toLocaleString()}
           </p>
           <p
-            className={`text-sm ${
-              coin.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'
-            }`}
+            className={`text-sm ${coin.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'}`}
           >
             {coin.price_change_percentage_24h.toFixed(2)}%
           </p>
@@ -110,6 +128,15 @@ export default function CompareCard({ coin }: CompareCardProps) {
           />
         </div>
       )}
+
+      <div className="mt-4 flex justify-center">
+        <button
+          onClick={handleSetAlert}
+          className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded transition"
+        >
+          Set Price Alert
+        </button>
+      </div>
     </div>
   );
 }
