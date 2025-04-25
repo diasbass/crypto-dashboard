@@ -6,6 +6,7 @@ import ThemeToggle from "../components/ThemeToggle";
 import { PriceAlertsProvider } from "../contexts/PriceAlertsContext";
 import { Toaster } from 'react-hot-toast';
 import PriceAlertsWrapper from "../components/PriceAlertsWrapper";
+import Breadcrumb from "../components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "BTCrypto Watch",
@@ -80,6 +81,7 @@ export default function RootLayout({
               <ThemeToggle />
             </nav>
           </header>
+          <Breadcrumb />
 
           <main className="flex-grow">{children}</main>
 
