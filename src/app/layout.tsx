@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import ThemeToggle from "../components/ThemeToggle";
-import { Analytics } from "./providers";
 
 export const metadata: Metadata = {
   title: "BTCrypto Watch",
@@ -38,7 +37,6 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
-        <Analytics />
         <header className="bg-gray-800 p-4 shadow-md flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <svg
