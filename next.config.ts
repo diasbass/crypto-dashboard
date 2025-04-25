@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
+  images: {    
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.coingecko.com',
+        pathname: '/**',
+      },
       {
         protocol: 'https',
         hostname: 'coin-images.coingecko.com',
@@ -27,4 +32,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig;
+module.exports = nextConfig
