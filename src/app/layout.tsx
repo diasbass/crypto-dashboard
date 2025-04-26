@@ -41,15 +41,18 @@ export default function RootLayout({
                 <span className="font-bold text-lg">BTCrypto Watch</span>
               </Link>
               <nav className="flex items-center gap-4">
-                <Link href="/" className="hover:text-yellow-400 transition">
-                  Home
-                </Link>
                 <Link
                   href="/noticias"
                   className="hover:text-yellow-400 transition"
                 >
                   News
                 </Link>
+                <Link
+                  href="/trending"
+                  className="hover:text-yellow-400 transition"
+                >
+                  Trending Cryptos
+                </Link>                
                 <Link
                   href="/comparador"
                   className="hover:text-yellow-400 transition"
