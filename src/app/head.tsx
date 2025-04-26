@@ -50,6 +50,9 @@ export default function Head() {
             })(window,document,'script','dataLayer','GTM-WZTPDWWT');
           `}
       </Script>
+
+      {/* Adsense */}
+      <meta name="google-adsense-account" content="ca-pub-8721302481774100"></meta>
     </>
   );
 }
