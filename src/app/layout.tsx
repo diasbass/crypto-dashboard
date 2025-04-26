@@ -1,20 +1,22 @@
 import "./globals.css";
-import type { Metadata } from "next";
+//import type { Metadata } from "next";
 import Link from "next/link";
 import { PriceAlertsProvider } from "../contexts/PriceAlertsContext";
 import { ThemeProvider } from "../contexts/ThemeProvider"; // 👈 novo ThemeProvider
 import { Toaster } from "react-hot-toast";
 import ThemeToggle from "../components/ThemeToggle";
 import Breadcrumb from "../components/Breadcrumb";
+import Head from "./head"
 
-export const metadata: Metadata = {
+/*export const metadata: Metadata = {
   title: "BTCrypto Watch",
   description: "Crypto dashboard with charts, rankings and updated news",
-};
+};*/
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <Head></Head>
       <body className="min-h-screen flex flex-col transition-colors duration-300">
         <ThemeProvider> {/* envolvemos tudo no ThemeProvider */}
           <PriceAlertsProvider>
