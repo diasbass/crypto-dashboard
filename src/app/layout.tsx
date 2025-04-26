@@ -6,19 +6,33 @@ import { ThemeProvider } from "../contexts/ThemeProvider"; // 👈 novo ThemePro
 import { Toaster } from "react-hot-toast";
 import ThemeToggle from "../components/ThemeToggle";
 import Breadcrumb from "../components/Breadcrumb";
-import Head from "./head"
+import Head from "./head";
 
 /*export const metadata: Metadata = {
   title: "BTCrypto Watch",
   description: "Crypto dashboard with charts, rankings and updated news",
 };*/
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <Head></Head>
       <body className="min-h-screen flex flex-col transition-colors duration-300">
-        <ThemeProvider> {/* envolvemos tudo no ThemeProvider */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WZTPDWWT"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        <ThemeProvider>
+          {" "}
+          {/* envolvemos tudo no ThemeProvider */}
           <PriceAlertsProvider>
             <Toaster position="top-right" />
             {/* HEADER */}
@@ -30,10 +44,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/" className="hover:text-yellow-400 transition">
                   Home
                 </Link>
-                <Link href="/noticias" className="hover:text-yellow-400 transition">
+                <Link
+                  href="/noticias"
+                  className="hover:text-yellow-400 transition"
+                >
                   News
                 </Link>
-                <Link href="/comparador" className="hover:text-yellow-400 transition">
+                <Link
+                  href="/comparador"
+                  className="hover:text-yellow-400 transition"
+                >
                   Comparator
                 </Link>
                 <ThemeToggle />
@@ -48,7 +68,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* FOOTER */}
             <footer className="bg-white dark:bg-black text-center text-gray-400 text-sm p-4">
               © {new Date().getFullYear()} BTCrypto Watch. Desenvolvido por{" "}
-              <Link href="https://geekdigitalservices.com.br">Geek Digital Services</Link>.
+              <Link href="https://geekdigitalservices.com.br">
+                Geek Digital Services
+              </Link>
+              .
             </footer>
           </PriceAlertsProvider>
         </ThemeProvider>
