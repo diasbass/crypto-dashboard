@@ -15,7 +15,7 @@ export default function Breadcrumb() {
   });
 
   return (
-    <nav className="px-6 py-4 bg-white dark:bg-gray-900">
+    <nav className="px-6 py-4 bg-white dark:bg-black text-black dark:text-white">      
       <ol className="flex items-center text-sm text-gray-500 dark:text-gray-400 space-x-1">
         <li>
           <Link href="/" className="flex items-center hover:underline gap-1">
