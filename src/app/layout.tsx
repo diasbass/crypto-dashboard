@@ -52,7 +52,7 @@ export default function RootLayout({
                   className="hover:text-yellow-400 transition"
                 >
                   Trending Cryptos
-                </Link>                
+                </Link>
                 <Link
                   href="/comparador"
                   className="hover:text-yellow-400 transition"
@@ -70,11 +70,43 @@ export default function RootLayout({
 
             {/* FOOTER */}
             <footer className="bg-white dark:bg-black text-center text-gray-400 text-sm p-4">
-              © {new Date().getFullYear()} BTCrypto Watch. Desenvolvido por{" "}
-              <Link href="https://geekdigitalservices.com.br">
-                Geek Digital Services
-              </Link>
-              .
+              <div className="flex flex-wrap justify-center gap-4 mb-2">
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-yellow-400 transition"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/terms-of-service"
+                  className="hover:text-yellow-400 transition"
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  href="/about"
+                  className="hover:text-yellow-400 transition"
+                >
+                  About
+                </Link>
+                <Link
+                  href="/contact"
+                  className="hover:text-yellow-400 transition"
+                >
+                  Contact
+                </Link>
+              </div>
+              <p>
+                © {new Date().getFullYear()} BTCrypto Watch. Developed by{" "}
+                <Link
+                  href="https://geekdigitalservices.com.br"
+                  target="_blank"
+                  className="text-yellow-400 underline"
+                >
+                  Geek Digital Services
+                </Link>
+                .
+              </p>
             </footer>
           </PriceAlertsProvider>
         </ThemeProvider>
