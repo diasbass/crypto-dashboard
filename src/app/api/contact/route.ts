@@ -1,37 +1,56 @@
-import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
-export async function POST(req: Request) {
-  const { name, email, message } = await req.json();
+// Controle simples de limite de envios por IP (em memória)
+const ipSendTimestamps = new Map<string, number>();
 
-  console.log('Recebido no backend:', { name, email, message }); // 👈 Log para conferir se chegou
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
+export async function POST(request: Request) {
   try {
-    const info = await transporter.sendMail({
-      from: `"Contato BTCrypto Watch" <${process.env.EMAIL_USER}>`,
+    const { name, email, message } = await request.json();
+
+    if (!name || !email || !message) {
+      return NextResponse.json({ success: false, message: 'All fields are required.' }, { status: 400 });
+    }
+
+    // Captura o IP do cliente
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+
+    const now = Date.now();
+    const lastSent = ipSendTimestamps.get(ip) || 0;
+    const timeDiff = now - lastSent;
+
+    // Permitir apenas 1 envio a cada 60 segundos por IP
+    if (timeDiff < 60000) {
+      return NextResponse.json({ success: false, message: 'Please wait a minute before sending another message.' }, { status: 429 });
+    }
+
+    ipSendTimestamps.set(ip, now);
+
+    // Configura o transportador de e-mail
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"BTCrypto Watch Form" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
-      subject: `Nova mensagem de ${name}`,
+      subject: `New Contact Message from ${name}`,
       html: `
-        <h2>Nova mensagem de contato</h2>
-        <p><strong>Nome:</strong> ${name}</p>
+        <h2>New message received</h2>
+        <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Mensagem:</strong><br/>${message}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
       `,
     });
 
-    console.log('E-mail enviado! ID:', info.messageId); // 👈 Log para conferir se foi enviado
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
-    console.error('Erro ao enviar o e-mail:', error); // 👈 Log do erro se acontecer
-    return NextResponse.json({ success: false, error: 'Erro ao enviar o e-mail.' }, { status: 500 });
+    console.error('Error sending email:', error);
+    return NextResponse.json({ success: false, message: 'Internal Server Error' }, { status: 500 });
   }
 }
